@@ -61,7 +61,7 @@ public protocol Swifty360ViewDelegate: AnyObject {
 }
 
 open class Swifty360View: UIView {
-
+    open var motionAllowed: Bool = true
     open weak var delegate: Swifty360ViewDelegate?
     open var player: AVPlayer!
     open var motionManager: Swifty360MotionManagement!
@@ -203,7 +203,9 @@ extension Swifty360View: SCNSceneRendererDelegate {
 
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         DispatchQueue.main.async {
-            self.cameraController.updateCameraAngleForCurrentDeviceMotion()
+            if self.motionAllowed {
+                self.cameraController.updateCameraAngleForCurrentDeviceMotion()
+            }
         }
     }
 
